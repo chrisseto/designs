@@ -10,8 +10,8 @@ tolerance = 0.5; // TODO??
 wall_thickness = 2;
 
 resevoir = [
-	["height", 5*INCH],
-	["radius", 5*INCH/2],
+	["height", 6*INCH],
+	["radius", 6*INCH/2],
 ];
 
 water_tube = [
@@ -21,12 +21,12 @@ water_tube = [
 ];
 
 insert = [
-	["height", struct_val(resevoir, "height")*1.05],
+	["height", struct_val(resevoir, "height")*1.15],
 	["radius", struct_val(resevoir, "radius")-wall_thickness-tolerance],
 ];
 
-water_resevoir(resevoir, water_tube);
-up(wall_thickness) soil_insert(insert, water_tube);
+water_resevoir(resevoir, water_tube, anchor=BOTTOM);
+up(wall_thickness) soil_insert(insert, water_tube, anchor=BOTTOM);
 
 module water_resevoir(resevoir_spec, water_tube_spec, anchor, orient=UP, spin=0) {
 	rounding = .5;
@@ -71,8 +71,8 @@ module soil_insert(insert_spec, water_tube_spec, anchor, orient=UP, spin=0) {
 	];
 
 	attachable(anchor, spin, orient, r=radius, h=height) {
-		diff("holes", "") diff("remove", "keep holes") funnel(r2=radius, r1=radius/2, h=height, anchor=CENTER) {
-			tag("keep") tag_scope() diff() intersect() funnel(r2=radius, r1=radius/2, h=height, anchor=CENTER) {
+		diff("holes", "") diff("remove", "keep holes") funnel(r2=radius, r1=radius/3, h=height, anchor=CENTER) {
+			tag("keep") tag_scope() diff() intersect() funnel(r2=radius, r1=radius/3, h=height, anchor=CENTER) {
 				tag("intersect") position(LEFT+TOP) translate(water_tube_offset) cyl(r=water_tube_radius, h=height, anchor=TOP) {
 					tag("remove") position(BOTTOM) up(wall_thickness) cyl(r=water_tube_radius-wall_thickness, h=height, anchor=BOTTOM);
 				}
@@ -81,21 +81,21 @@ module soil_insert(insert_spec, water_tube_spec, anchor, orient=UP, spin=0) {
 			tag("remove") {
 				position(LEFT+TOP) up(1) translate(water_tube_offset) cyl(r=water_tube_radius, h=height, anchor=TOP);
 
-				position(BOTTOM) up(wall_thickness) funnel(r2=radius-wall_thickness, r1=(radius/2)-wall_thickness, h=height, anchor=BOTTOM);
+				position(BOTTOM) up(wall_thickness) funnel(r2=radius-wall_thickness, r1=(radius/3)-wall_thickness, h=height, anchor=BOTTOM);
 			};
 
 			tag("holes") position(BOTTOM) {
 				layers=2;
-				hole_size=height/30;
+				hole_size=height/40;
 
-				up(wall_thickness+(hole_size*layers))
+				up(height/12+wall_thickness)
 					zcopies(l=height/8, n=layers)
 						zrot($idx*180/8)
-						zrot_copies(n=8, r=radius/2)
+						zrot_copies(n=6, r=radius/2)
 							zrot(90) teardrop(r=hole_size, l=radius, anchor=BOTTOM+CENTER);
 
 				// Cone holes.
-				up(height/4+height/30*2) zrot_copies(n=8, r=radius/2)
+				up(height/4+height/30*2) zrot_copies(n=6, r=radius/2)
 					zrot(90) xrot(36) teardrop(r=hole_size, l=radius/2, anchor=CENTER);
 			};
 		};

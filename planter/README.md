@@ -2,6 +2,10 @@
 
 A "Self-Watering" Planter inspired by [this model](https://www.printables.com/model/274589).
 
+I wanted a scalable version of the above model as scaling models results in
+thicker than necessary walls. Change the parameters of the (misnamed)
+`resevoir` struct to the desired _internal_ dimensions.
+
 ![preview](./preview.png)
 
 [See a rendered version here](./planter.stl).
