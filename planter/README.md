@@ -8,7 +8,7 @@ thicker than necessary walls. Change the parameters of the (misnamed)
 
 ![preview](./preview.png)
 
-[See a rendered version here](./planter.stl).
+[See a rendered version here](./rendered.stl).
 
 <!-- /Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD -o self-watering-planter/preview.png --enable fast-csg --enable fast-csg-safer --enable lazy-union self-watering-planter/planter.scad -->
 

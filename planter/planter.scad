@@ -4,7 +4,7 @@ include <BOSL2/structs.scad>
 
 // Set facetting to an acceptably high level. Set it higher when actually
 // rendering.
-$fn= $preview ? 32 : 64;
+$fn = $preview ? 32 : 64;
 
 tolerance = 0.5; // TODO??
 wall_thickness = 2;
